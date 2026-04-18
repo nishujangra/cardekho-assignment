@@ -18,7 +18,7 @@ const defaultNeed: UserNeed = {
 };
 
 // Dark theme utility classes
-const selectCls = 'w-full rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none ring-brand-primary/40 transition focus:border-brand-primary/50 focus:ring-2 appearance-none';
+const selectCls = 'w-full rounded-full border border-white/10 bg-[#1c1c27] px-4 py-2.5 text-sm text-white outline-none ring-brand-primary/40 transition focus:border-brand-primary/50 focus:ring-2 appearance-none [&>option]:bg-[#1c1c27] [&>option]:text-white';
 const inputCls = 'w-full rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white outline-none ring-brand-primary/40 transition focus:border-brand-primary/50 focus:ring-2';
 
 export default function NeedForm({ onSubmit, loading }: Props) {
@@ -96,6 +96,47 @@ export default function NeedForm({ onSubmit, loading }: Props) {
               <option value="cng">CNG</option>
               <option value="ev">Electric (EV)</option>
               <option value="hybrid">Hybrid</option>
+            </select>
+            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-brand-primary">▼</div>
+          </div>
+        </div>
+
+        {/* Primary Usage */}
+        <div className="flex flex-col gap-2">
+          <label className="text-[10px] font-black uppercase tracking-widest text-brand-muted">Primary Usage</label>
+          <div className="relative">
+            <select className={selectCls} value={need.primary_usage} onChange={e => set('primary_usage', e.target.value)}>
+              <option value="city">City</option>
+              <option value="highway">Highway</option>
+              <option value="mixed">Mixed</option>
+            </select>
+            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-brand-primary">▼</div>
+          </div>
+        </div>
+
+        {/* Transmission */}
+        <div className="flex flex-col gap-2">
+          <label className="text-[10px] font-black uppercase tracking-widest text-brand-muted">Transmission</label>
+          <div className="relative">
+            <select className={selectCls} value={need.transmission_pref} onChange={e => set('transmission_pref', e.target.value)}>
+              <option value="any">Any</option>
+              <option value="manual">Manual</option>
+              <option value="automatic">Automatic</option>
+            </select>
+            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-brand-primary">▼</div>
+          </div>
+        </div>
+
+        {/* Body Type */}
+        <div className="flex flex-col gap-2">
+          <label className="text-[10px] font-black uppercase tracking-widest text-brand-muted">Body Type</label>
+          <div className="relative">
+            <select className={selectCls} value={need.body_type_pref} onChange={e => set('body_type_pref', e.target.value)}>
+              <option value="any">Any</option>
+              <option value="hatchback">Hatchback</option>
+              <option value="sedan">Sedan</option>
+              <option value="suv">SUV</option>
+              <option value="mpv">MPV</option>
             </select>
             <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-brand-primary">▼</div>
           </div>
