@@ -8,8 +8,8 @@ interface Props {
 }
 
 function fmtPrice(n: number) {
-  if (n >= 10_00_000) return `₹${(n / 10_00_000).toFixed(2)} Cr`;
-  return `₹${(n / 1_00_000).toFixed(1)}L`;
+  if (n >= 1_00_00_000) return `₹${(n / 1_00_00_000).toFixed(2)} Cr`;
+  return `₹${(n / 1_00_000).toFixed(2)}L`;
 }
 
 export default function ShortlistPanel({ pendingCarId, onClearPending }: Props) {
