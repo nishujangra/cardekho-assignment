@@ -9,7 +9,9 @@ go run cmd/main.go
 
 **Frontend** (`:5173`):
 ```bash
-cd web && npm install && npm run dev
+cd web
+vi .env # edit VITE_API_BASE_URL
+npm install && npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173).

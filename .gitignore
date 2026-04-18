@@ -1,3 +1,6 @@
+# internal planning docs
+docs/internal/
+
 # Go
 *.exe
 *.exe~
