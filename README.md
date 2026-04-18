@@ -14,7 +14,7 @@ vi .env # edit VITE_API_BASE_URL
 npm install && npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
+Open [shift.nishujangra.dev](https://shift.nishujangra.dev).
 
 ## API Endpoints
 
