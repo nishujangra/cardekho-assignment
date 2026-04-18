@@ -43,11 +43,11 @@ export default function FindPage() {
   }
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-6 md:gap-10">
       {/* Search Header Section */}
       <section className="mx-auto w-full max-w-3xl">
-        <div className="mb-8 text-center">
-          <h2 className="text-3xl font-black tracking-tighter text-white uppercase">Define Your Needs</h2>
+        <div className="mb-8 text-center px-4 md:px-0">
+          <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-white uppercase">Define Your Needs</h2>
           <p className="mt-2 text-brand-muted">Our engine analyzes 1,000+ data points to find your match.</p>
         </div>
         
@@ -57,16 +57,16 @@ export default function FindPage() {
       </section>
 
       {error && (
-        <div className="mx-auto w-full max-w-2xl rounded-xl border border-red-500/20 bg-red-500/10 px-6 py-4 text-center text-sm font-medium text-red-400">
+        <div className="mx-auto w-full max-w-2xl rounded-xl border border-red-500/20 bg-red-500/10 px-6 py-4 text-center text-sm font-medium text-red-400 mx-4 md:mx-auto">
           <span className="mr-2">⚠️</span> {error}
         </div>
       )}
 
       {recs.length > 0 && (
         <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <div className="flex items-end justify-between border-b border-white/10 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-4 gap-4 sm:gap-0 px-4 md:px-0">
             <div>
-              <h2 className="text-2xl font-black tracking-tighter text-white uppercase">Verified Matches</h2>
+              <h2 className="text-xl md:text-2xl font-black tracking-tighter text-white uppercase">Verified Matches</h2>
               <p className="text-sm text-brand-muted">Ranked by lifestyle compatibility score.</p>
             </div>
             
@@ -74,7 +74,7 @@ export default function FindPage() {
               <button
                 onClick={goToCompare}
                 disabled={compareIds.size < 2}
-                className={`flex items-center gap-2 rounded-full px-6 py-2 text-xs font-black uppercase tracking-widest transition-all ${
+                className={`flex w-full sm:w-auto justify-center items-center gap-2 rounded-full px-6 py-3 sm:py-2 text-xs font-black uppercase tracking-widest transition-all ${
                   compareIds.size >= 2 
                     ? 'bg-brand-primary text-black shadow-glow' 
                     : 'bg-white/5 text-brand-muted border border-white/10 cursor-not-allowed'
@@ -85,7 +85,7 @@ export default function FindPage() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 px-4 md:px-0">
             {recs.map((rec, i) => (
               <RecommendationCard
                 key={rec.car.id}

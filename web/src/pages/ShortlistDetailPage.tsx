@@ -53,11 +53,11 @@ export default function ShortlistDetailPage() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center gap-6 py-32 text-center">
+      <div className="flex flex-col items-center gap-6 py-16 md:py-32 text-center px-4">
         <p className="text-red-400 font-bold">{error}</p>
         <button 
           onClick={() => navigate('/shortlists')} 
-          className="rounded-full border border-white/10 px-6 py-2 text-xs font-black uppercase tracking-widest text-white hover:bg-white/5"
+          className="rounded-full border border-white/10 px-6 py-3 md:py-2 text-xs font-black uppercase tracking-widest text-white hover:bg-white/5"
         >
           ← Return to Collections
         </button>
@@ -74,7 +74,7 @@ export default function ShortlistDetailPage() {
   }
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-6 md:gap-10 px-4 md:px-0">
       {/* Navigation & Header */}
       <div className="flex flex-col gap-4">
         <button 
@@ -84,7 +84,7 @@ export default function ShortlistDetailPage() {
           <span className="transition-transform group-hover:-translate-x-1">←</span> Back to Archives
         </button>
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0">
           {editing ? (
             <form onSubmit={handleRename} className="flex items-center gap-3 w-full max-w-md">
               <input
@@ -101,8 +101,8 @@ export default function ShortlistDetailPage() {
               </button>
             </form>
           ) : (
-            <div className="flex items-baseline gap-4">
-              <h1 className="text-4xl font-black tracking-tighter text-white uppercase italic">{sl.name}</h1>
+            <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
+              <h1 className="text-2xl sm:text-4xl font-black tracking-tighter text-white uppercase italic">{sl.name}</h1>
               <button 
                 onClick={() => setEditing(true)} 
                 className="text-[10px] font-black uppercase tracking-widest text-brand-muted hover:text-brand-primary"
@@ -120,7 +120,7 @@ export default function ShortlistDetailPage() {
         {(sl.cars ?? []).map(car => (
           <div key={car.id} className="group relative overflow-hidden rounded-2xl border border-white/5 bg-surface p-6 transition-all hover:border-brand-primary/20">
             {/* Price Tag Overlay */}
-            <div className="mb-4 flex items-start justify-between">
+            <div className="mb-4 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-0">
               <div className="flex flex-col">
                 <h3 className="text-lg font-black leading-none text-white uppercase">{car.brand}</h3>
                 <span className="mt-1 text-xl font-black tracking-tighter text-brand-primary">{car.model}</span>

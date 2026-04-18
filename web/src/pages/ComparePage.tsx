@@ -46,8 +46,8 @@ export default function ComparePage() {
   }
 
   return (
-    <div className="flex flex-col gap-8 pb-20">
-      <div className="flex items-end justify-between">
+    <div className="flex flex-col gap-6 md:gap-8 pb-10 md:pb-20 px-4 md:px-0">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-0">
         <div>
           <h1 className="text-3xl font-black tracking-tighter text-white uppercase italic">Head-to-Head</h1>
           <p className="text-brand-muted text-sm">Comparing the logic behind your top {recs.length} matches.</p>

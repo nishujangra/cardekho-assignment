@@ -44,8 +44,8 @@ export default function NeedForm({ onSubmit, loading }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="p-8">
-      <div className="mb-8 flex items-center gap-3">
+    <form onSubmit={handleSubmit} className="p-4 sm:p-8">
+      <div className="mb-6 sm:mb-8 flex items-center gap-3">
         <div className="h-2 w-2 rounded-full bg-brand-primary animate-pulse" />
         <h2 className="text-xs font-black uppercase tracking-[0.4em] text-white">Input Parameters</h2>
       </div>

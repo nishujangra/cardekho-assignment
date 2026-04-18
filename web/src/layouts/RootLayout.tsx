@@ -14,7 +14,7 @@ export default function RootLayout() {
       
       {/* Header with glassmorphism and subtle border */}
       <header className="sticky top-0 z-50 border-b border-border bg-surface/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-4">
           
           <NavLink to="/" className="group flex items-center gap-2">
             {/* Minimalist Logo Accent */}
@@ -24,7 +24,7 @@ export default function RootLayout() {
             </span>
           </NavLink>
 
-          <nav className="flex items-center gap-8">
+          <nav className="flex items-center gap-4 sm:gap-8">
             <NavLink to="/find" className={linkCls}>
               Match Engine
             </NavLink>
@@ -37,12 +37,12 @@ export default function RootLayout() {
       </header>
 
       {/* Main Content Area */}
-      <main className="mx-auto max-w-6xl px-6 py-10">
+      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-6 sm:py-10">
         <Outlet />
       </main>
 
       <footer className="border-t border-border mt-10">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <div className="mx-auto flex flex-col sm:flex-row max-w-6xl items-center justify-between gap-2 sm:gap-0 px-4 sm:px-6 py-5">
           <span className="text-xs font-black uppercase tracking-tighter text-white">Shift</span>
           <span className="text-[11px] text-brand-muted">Built for CarDekho Assignment · {new Date().getFullYear()}</span>
         </div>

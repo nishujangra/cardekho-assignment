@@ -66,9 +66,9 @@ export default function ShortlistsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-6 md:gap-10 px-4 md:px-0">
       {/* Header Section */}
-      <div className="flex items-end justify-between border-b border-white/10 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-6 gap-4 sm:gap-0">
         <div>
           <h1 className="text-3xl font-black tracking-tighter text-white uppercase italic">Saved Archives</h1>
           <p className="text-brand-muted text-sm">Your data-driven roadmaps to a final purchase.</p>

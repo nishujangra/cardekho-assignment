@@ -4,7 +4,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative flex flex-col items-center justify-center gap-12 py-16 text-center lg:py-24">
+    <div className="relative flex flex-col items-center justify-center gap-8 md:gap-12 py-10 md:py-16 text-center lg:py-24 px-4">
       
       {/* Hero Section */}
       <div className="flex flex-col gap-5">
@@ -17,23 +17,23 @@ export default function HomePage() {
       </div>
 
       {/* Primary Actions */}
-      <div className="flex flex-wrap justify-center gap-5">
+      <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-5 w-full sm:w-auto px-4 sm:px-0">
         <button
           onClick={() => navigate('/find')}
-          className="group relative overflow-hidden rounded-full bg-brand-primary px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:scale-105 hover:shadow-glow"
+          className="w-full sm:w-auto group relative overflow-hidden rounded-full bg-brand-primary px-8 py-4 text-sm font-black uppercase tracking-widest text-black transition-all hover:scale-105 hover:shadow-glow"
         >
           Start Match Engine
         </button>
         <button
           onClick={() => navigate('/shortlists')}
-          className="rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-black uppercase tracking-widest text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-brand-primary/50"
+          className="w-full sm:w-auto rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-black uppercase tracking-widest text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-brand-primary/50"
         >
           View My Shortlist
         </button>
       </div>
 
       {/* Feature Logic Cards */}
-      <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
+      <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-5xl px-4 sm:px-0 mx-auto">
         {[
           { 
             title: 'Lifestyle Mapping', 

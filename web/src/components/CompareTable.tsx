@@ -25,11 +25,11 @@ export default function CompareTable({ recs, onClose }: Props) {
   if (recs.length === 0) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 lg:p-12">
-      <div className="flex h-full w-full max-w-7xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-surface shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)]">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-2 sm:p-4 lg:p-12">
+      <div className="flex h-[95vh] sm:h-full w-full max-w-7xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-surface shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)]">
         
         {/* Modal Header */}
-        <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-8 py-6">
+        <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 sm:px-8 py-4 sm:py-6">
           <div>
             <h2 className="text-xs font-black uppercase tracking-[0.3em] text-brand-primary">Analysis Dashboard</h2>
             <p className="text-xl font-black text-white uppercase italic tracking-tighter">Technical Comparison</p>
@@ -43,7 +43,7 @@ export default function CompareTable({ recs, onClose }: Props) {
         </div>
 
         {/* Comparison Engine */}
-        <div className="flex-1 overflow-auto p-8">
+        <div className="flex-1 overflow-auto p-4 sm:p-8">
           <table className="min-w-full border-collapse text-left">
             <thead>
               <tr className="border-b border-white/10">
