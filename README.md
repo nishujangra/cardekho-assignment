@@ -1,5 +1,8 @@
 # Cardekho Assignment — Car Finalization Website
 
+Note: During recording, the OBS capture canvas was misconfigured, so parts of the screen are cropped in sections of the video. The session is otherwise authentic and unedited, and the full source code / working application is included in the repository and live demo.
+
+
 ## Local Run
 
 **Backend** (`:8080`):
