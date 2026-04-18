@@ -31,11 +31,7 @@ export default function RootLayout() {
             <NavLink to="/shortlists" className={linkCls}>
               My Shortlist
             </NavLink>
-            
-            {/* Added a subtle CTA style for the primary action */}
-            <button className="hidden md:block rounded-full bg-white/5 px-4 py-1.5 text-xs font-bold text-brand-primary border border-brand-primary/20 hover:bg-brand-primary hover:text-black transition-all">
-              Save Progress
-            </button>
+
           </nav>
         </div>
       </header>
@@ -44,6 +40,13 @@ export default function RootLayout() {
       <main className="mx-auto max-w-6xl px-6 py-10">
         <Outlet />
       </main>
+
+      <footer className="border-t border-border mt-10">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+          <span className="text-xs font-black uppercase tracking-tighter text-white">Shift</span>
+          <span className="text-[11px] text-brand-muted">Built for CarDekho Assignment · {new Date().getFullYear()}</span>
+        </div>
+      </footer>
 
       {/* Subtle background glow for dark mode depth */}
       <div className="fixed top-0 left-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-secondary/5 blur-[120px]" />

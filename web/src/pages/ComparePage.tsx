@@ -118,9 +118,9 @@ export default function ComparePage() {
               </td>
               {recs.map(r => (
                 <td key={r.car.id} className="px-6 py-6">
-                  {r.tradeoffs.length > 0 ? (
+                  {(r.tradeoffs ?? []).length > 0 ? (
                     <ul className="space-y-3">
-                      {r.tradeoffs.map((t, i) => (
+                      {(r.tradeoffs ?? []).map((t, i) => (
                         <li key={i} className="flex gap-2 text-brand-muted text-xs italic leading-snug">
                           <span className="text-red-500/50">✕</span>
                           {t}

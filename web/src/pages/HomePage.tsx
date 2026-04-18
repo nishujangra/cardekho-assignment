@@ -9,7 +9,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <div className="flex flex-col gap-5">
         <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white">
-          DRIVE WITH <span className="text-brand-primary">CERTAINTY.</span>
+          DRIVE WITH <span className="text-brand-primary">CERTAINTY</span>
         </h1>
         <p className="mx-auto max-w-2xl text-lg md:text-xl text-brand-muted leading-relaxed">
           The noise of 400+ car models, distilled into the <span className="text-white italic">only three</span> that actually fit your lifestyle. No ads, no bias, just logic.
