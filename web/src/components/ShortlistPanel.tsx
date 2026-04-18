@@ -26,13 +26,11 @@ export default function ShortlistPanel({ pendingCarId, onClearPending }: Props) 
       const details = await Promise.all((sls ?? []).map(sl => shortlistApi.get(sl.id)));
       setShortlists(details);
     } catch {
-      setError('Failed to load shortlists');
+      setError('System: Failed to sync archives.');
     }
   }
 
-  useEffect(() => {
-    load();
-  }, []);
+  useEffect(() => { load(); }, []);
 
   useEffect(() => {
     if (pendingCarId) setShowCreate(true);
@@ -41,7 +39,7 @@ export default function ShortlistPanel({ pendingCarId, onClearPending }: Props) 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
     if (!newName.trim()) {
-      setNameError('Name is required');
+      setNameError('Identity tag required');
       return;
     }
     setNameError('');
@@ -52,7 +50,7 @@ export default function ShortlistPanel({ pendingCarId, onClearPending }: Props) 
       onClearPending();
       await load();
     } catch {
-      setError('Failed to create shortlist');
+      setError('Archive creation failed.');
     }
   }
 
@@ -66,16 +64,17 @@ export default function ShortlistPanel({ pendingCarId, onClearPending }: Props) 
       onClearPending();
       await load();
     } catch {
-      setError('Failed to update shortlist');
+      setError('Update failed.');
     }
   }
 
   async function handleDelete(id: string) {
+    if (!window.confirm("Purge this archive?")) return;
     try {
       await shortlistApi.delete(id);
       await load();
     } catch {
-      setError('Failed to delete shortlist');
+      setError('Purge failed.');
     }
   }
 
@@ -86,52 +85,52 @@ export default function ShortlistPanel({ pendingCarId, onClearPending }: Props) 
       await shortlistApi.update(slId, sl.name, sl.car_ids.filter(id => id !== carId));
       await load();
     } catch {
-      setError('Failed to update shortlist');
+      setError('Item de-listing failed.');
     }
   }
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <h2 className="text-lg font-semibold text-slate-900">My Shortlists</h2>
+    <div className="rounded-2xl border border-white/5 bg-surface p-6 shadow-2xl">
+      <div className="mb-6 flex items-center justify-between gap-2 border-b border-white/5 pb-4">
+        <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-primary">Your Archives</h2>
         <button
-          className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:border-blue-400 hover:text-blue-700"
+          className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-white transition hover:bg-white/10"
           onClick={() => {
             setShowCreate(true);
             setNameError('');
           }}
         >
-          + New
+          + Initialize
         </button>
       </div>
 
-      {error && <div className="mb-3 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>}
+      {error && <div className="mb-4 rounded-lg bg-red-500/10 px-3 py-2 text-[10px] font-bold text-red-400 uppercase tracking-tighter">{error}</div>}
 
       {pendingCarId && (
-        <div className="mb-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
-          Adding car to shortlist. Pick one below or create a new shortlist.
+        <div className="mb-6 animate-pulse rounded-lg border border-brand-primary/20 bg-brand-primary/5 px-4 py-3 text-[10px] font-black uppercase tracking-widest text-brand-primary">
+          <span className="mr-2">⚡</span> Target Ready: Select Archive
         </div>
       )}
 
       {showCreate && (
-        <form onSubmit={handleCreate} className="mb-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+        <form onSubmit={handleCreate} className="mb-6 rounded-xl border border-white/5 bg-white/[0.02] p-4">
           <input
             autoFocus
-            className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 outline-none ring-blue-500/40 transition focus:ring-2"
-            placeholder="Shortlist name"
+            className="w-full rounded-full border border-white/10 bg-black/20 px-4 py-2 text-xs text-white outline-none focus:border-brand-primary/40"
+            placeholder="Archive Name (e.g. City SUVs)"
             value={newName}
             onChange={e => {
               setNewName(e.target.value);
               setNameError('');
             }}
           />
-          {nameError && <span className="mt-1 block text-xs text-red-600">{nameError}</span>}
-          <div className="mt-2 flex gap-2">
-            <button className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700" type="submit">
-              Create
+          {nameError && <span className="mt-2 block text-[9px] font-bold text-red-500 uppercase">{nameError}</span>}
+          <div className="mt-3 flex gap-2">
+            <button className="flex-1 rounded-full bg-brand-primary py-2 text-[9px] font-black uppercase tracking-widest text-black" type="submit">
+              Confirm
             </button>
             <button
-              className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:border-blue-400 hover:text-blue-700"
+              className="flex-1 rounded-full border border-white/10 py-2 text-[9px] font-black uppercase tracking-widest text-white"
               type="button"
               onClick={() => {
                 setShowCreate(false);
@@ -139,67 +138,71 @@ export default function ShortlistPanel({ pendingCarId, onClearPending }: Props) 
                 setNameError('');
               }}
             >
-              Cancel
+              Abort
             </button>
           </div>
         </form>
       )}
 
-      {shortlists.length === 0 && !showCreate && (
-        <p className="text-sm text-slate-500">No shortlists yet. Create one after getting recommendations.</p>
-      )}
+      <div className="space-y-3">
+        {shortlists.length === 0 && !showCreate && (
+          <p className="py-8 text-center text-[10px] font-bold uppercase tracking-widest text-brand-muted opacity-30">
+            No Active Archives
+          </p>
+        )}
 
-      <div className="space-y-2">
         {shortlists.map(sl => (
-          <div key={sl.id} className="rounded-lg border border-slate-200">
-            <div className="flex items-center justify-between gap-2 p-2">
+          <div key={sl.id} className="overflow-hidden rounded-xl border border-white/5 bg-white/[0.01]">
+            <div className={`flex items-center justify-between gap-2 p-3 transition-colors ${expanded === sl.id ? 'bg-white/[0.03]' : ''}`}>
               <button
-                className="flex flex-1 items-center gap-2 text-left"
+                className="flex flex-1 items-center gap-3 text-left group"
                 onClick={() => setExpanded(expanded === sl.id ? null : sl.id)}
               >
-                <strong className="text-sm text-slate-800">{sl.name}</strong>
-                <span className="text-xs text-slate-500">{sl.car_ids.length} cars</span>
-                <span className="ml-auto text-xs text-slate-400">{expanded === sl.id ? '▲' : '▼'}</span>
+                <div className="flex flex-col">
+                  <strong className="text-xs font-black uppercase tracking-tight text-white group-hover:text-brand-primary transition-colors">{sl.name}</strong>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-brand-muted">{sl.car_ids.length} Units</span>
+                </div>
               </button>
-              <div className="flex gap-1">
+              
+              <div className="flex gap-2">
                 {pendingCarId && (
                   <button
-                    className="rounded-md bg-blue-600 px-2 py-1 text-xs font-medium text-white transition hover:bg-blue-700"
+                    className="rounded-full bg-brand-primary px-3 py-1 text-[9px] font-black uppercase text-black"
                     onClick={() => handleAddToExisting(sl.id)}
                   >
                     + Add
                   </button>
                 )}
                 <button
-                  className="rounded-md border border-red-300 px-2 py-1 text-xs font-medium text-red-700 transition hover:bg-red-600 hover:text-white"
+                  className="rounded-full p-2 text-brand-muted hover:text-red-500 transition-colors"
                   onClick={() => handleDelete(sl.id)}
                 >
-                  Delete
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
                 </button>
               </div>
             </div>
 
             {expanded === sl.id && (
-              <div className="border-t border-slate-200 p-2">
-                {(sl.cars ?? []).length === 0 && <p className="text-sm text-slate-500">No cars in this shortlist.</p>}
-                <div className="space-y-1.5">
-                  {(sl.cars ?? []).map(car => (
-                    <div key={car.id} className="flex items-center justify-between gap-2 rounded-md bg-slate-50 px-2 py-1.5">
-                      <div className="text-sm text-slate-700">
-                        <strong className="text-slate-900">
-                          {car.brand} {car.model}
-                        </strong>
-                        <span className="text-slate-500"> - {fmtPrice(car.price_inr)}</span>
-                      </div>
-                      <button
-                        className="rounded-md border border-red-300 px-2 py-1 text-xs font-medium text-red-700 transition hover:bg-red-600 hover:text-white"
-                        onClick={() => handleRemoveCar(sl.id, car.id)}
-                      >
-                        Remove
-                      </button>
+              <div className="border-t border-white/5 bg-black/20 p-3 space-y-2">
+                {(sl.cars ?? []).length === 0 && (
+                  <p className="py-2 text-center text-[9px] italic text-brand-muted">Registry Empty</p>
+                )}
+                {(sl.cars ?? []).map(car => (
+                  <div key={car.id} className="flex items-center justify-between gap-2 rounded-lg bg-white/[0.02] border border-white/5 px-3 py-2">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-bold text-white">{car.brand} {car.model}</span>
+                      <span className="text-[9px] text-brand-primary/70">{fmtPrice(car.price_inr)}</span>
                     </div>
-                  ))}
-                </div>
+                    <button
+                      className="text-[9px] font-black uppercase text-red-500/50 hover:text-red-500 transition-colors"
+                      onClick={() => handleRemoveCar(sl.id, car.id)}
+                    >
+                      Delist
+                    </button>
+                  </div>
+                ))}
               </div>
             )}
           </div>

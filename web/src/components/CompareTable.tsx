@@ -10,91 +10,118 @@ function fmtPrice(n: number) {
   return `₹${(n / 1_00_000).toFixed(1)}L`;
 }
 
-const ROWS: { label: string; key: keyof import('../types').Car | null; render?: (r: Recommendation) => string }[] = [
-  { label: 'Price', key: null, render: r => fmtPrice(r.car.price_inr) },
-  { label: 'Body Type', key: 'body_type' },
-  { label: 'Fuel', key: 'fuel_type' },
+const ROWS: { label: string; key: keyof import('../types').Car | null; render?: (r: Recommendation) => React.ReactNode }[] = [
+  { label: 'Market Price', key: null, render: r => <span className="font-black text-brand-primary">{fmtPrice(r.car.price_inr)}</span> },
+  { label: 'Configuration', key: null, render: r => <span className="capitalize">{r.car.body_type} · {r.car.fuel_type}</span> },
   { label: 'Transmission', key: 'transmission' },
-  { label: 'Seating', key: null, render: r => `${r.car.seating_capacity} seats` },
-  { label: 'Mileage', key: null, render: r => (r.car.fuel_type === 'ev' ? 'EV (₹/km)' : `${r.car.mileage_kmpl} kmpl`) },
-  { label: 'Safety Rating', key: null, render: r => `${r.car.safety_rating} / 5` },
-  { label: 'Boot Space', key: null, render: r => `${r.car.boot_space_litres} L` },
-  { label: 'City Score', key: null, render: r => `${r.car.city_score} / 10` },
-  { label: 'Highway Score', key: null, render: r => `${r.car.highway_score} / 10` },
-  { label: 'Features', key: null, render: r => r.car.feature_tags?.join(', ') || '—' },
+  { label: 'Capacity', key: null, render: r => `${r.car.seating_capacity} Occupants` },
+  { label: 'Efficiency', key: null, render: r => (r.car.fuel_type === 'ev' ? 'Electric Range' : `${r.car.mileage_kmpl} kmpl`) },
+  { label: 'Safety Index', key: null, render: r => <span className="text-white font-bold">{r.car.safety_rating} / 5.0</span> },
+  { label: 'Storage', key: null, render: r => `${r.car.boot_space_litres} Litres` },
+  { label: 'Logic Scores', key: null, render: r => <span className="text-brand-muted">{r.car.city_score} City / {r.car.highway_score} Hwy</span> },
 ];
 
 export default function CompareTable({ recs, onClose }: Props) {
   if (recs.length === 0) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 p-4">
-      <div className="mx-auto flex h-full max-w-6xl flex-col rounded-xl bg-white shadow-xl">
-        <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-          <h2 className="text-lg font-semibold text-slate-900">Compare Cars</h2>
-          <button className="rounded-md p-1 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800" onClick={onClose}>
-            ✕
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 lg:p-12">
+      <div className="flex h-full w-full max-w-7xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-surface shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)]">
+        
+        {/* Modal Header */}
+        <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-8 py-6">
+          <div>
+            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-brand-primary">Analysis Dashboard</h2>
+            <p className="text-xl font-black text-white uppercase italic tracking-tighter">Technical Comparison</p>
+          </div>
+          <button 
+            className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/10 transition hover:border-brand-primary/50" 
+            onClick={onClose}
+          >
+            <span className="text-white group-hover:text-brand-primary">✕</span>
           </button>
         </div>
 
-        <div className="overflow-auto p-4">
-          <table className="min-w-full border-collapse text-sm">
+        {/* Comparison Engine */}
+        <div className="flex-1 overflow-auto p-8">
+          <table className="min-w-full border-collapse text-left">
             <thead>
-              <tr>
-                <th className="sticky left-0 bg-slate-50 px-3 py-2 text-left font-semibold text-slate-700">Spec</th>
+              <tr className="border-b border-white/10">
+                <th className="sticky left-0 z-30 bg-surface pr-8 pb-6 text-[10px] font-black uppercase tracking-widest text-brand-muted">
+                  Metric
+                </th>
                 {recs.map(r => (
-                  <th key={r.car.id} className="min-w-[180px] bg-slate-50 px-3 py-2 text-left font-semibold text-slate-800">
-                    {r.car.brand} {r.car.model}
-                    <div className="text-xs font-normal text-slate-500">{r.car.variant}</div>
+                  <th key={r.car.id} className="min-w-[240px] px-6 pb-6">
+                    <div className="text-sm font-black text-white leading-tight uppercase">
+                      {r.car.brand} {r.car.model}
+                    </div>
+                    <div className="text-[10px] font-bold text-brand-muted uppercase tracking-tighter">{r.car.variant}</div>
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody>
+            
+            <tbody className="divide-y divide-white/5 text-sm">
               {ROWS.map(row => (
-                <tr key={row.label} className="border-b border-slate-100">
-                  <td className="sticky left-0 bg-white px-3 py-2 font-medium text-slate-700">{row.label}</td>
+                <tr key={row.label} className="group transition-colors hover:bg-white/[0.01]">
+                  <td className="sticky left-0 z-30 bg-surface py-4 pr-8 text-[10px] font-black uppercase tracking-wider text-brand-muted">
+                    {row.label}
+                  </td>
                   {recs.map(r => (
-                    <td key={r.car.id} className="px-3 py-2 text-slate-600">
+                    <td key={r.car.id} className="px-6 py-4 text-slate-300">
                       {row.render ? row.render(r) : row.key ? String(r.car[row.key]) : '—'}
                     </td>
                   ))}
                 </tr>
               ))}
-              <tr className="border-b border-slate-100">
-                <td className="sticky left-0 bg-white px-3 py-2 font-medium text-slate-700">Why it fits</td>
+
+              {/* High Intensity Logic Rows */}
+              <tr className="bg-brand-primary/[0.02]">
+                <td className="sticky left-0 z-30 bg-surface py-6 pr-8 text-[10px] font-black uppercase tracking-wider text-brand-primary">
+                  The Fit
+                </td>
                 {recs.map(r => (
-                  <td key={r.car.id} className="px-3 py-2">
-                    <ul className="space-y-1">
+                  <td key={r.car.id} className="px-6 py-6">
+                    <ul className="space-y-2">
                       {r.why_fits.map((w, i) => (
-                        <li key={i} className="text-emerald-700">
-                          + {w}
+                        <li key={i} className="flex gap-2 text-xs font-bold text-white leading-tight">
+                          <span className="text-brand-primary">✔</span> {w}
                         </li>
                       ))}
                     </ul>
                   </td>
                 ))}
               </tr>
+
               <tr>
-                <td className="sticky left-0 bg-white px-3 py-2 font-medium text-slate-700">Tradeoffs</td>
+                <td className="sticky left-0 z-30 bg-surface py-6 pr-8 text-[10px] font-black uppercase tracking-wider text-red-500/70">
+                  Tradeoffs
+                </td>
                 {recs.map(r => (
-                  <td key={r.car.id} className="px-3 py-2">
+                  <td key={r.car.id} className="px-6 py-6">
                     {r.tradeoffs.length > 0 ? (
-                      <ul className="space-y-1">
+                      <ul className="space-y-2">
                         {r.tradeoffs.map((t, i) => (
-                          <li key={i} className="text-amber-700">
-                            - {t}
+                          <li key={i} className="flex gap-2 text-[11px] italic text-brand-muted leading-tight">
+                            <span className="text-red-500/30">✕</span> {t}
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <span className="text-slate-400">None</span>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-brand-muted/20">Optimal</span>
                     )}
                   </td>
                 ))}
               </tr>
             </tbody>
           </table>
+        </div>
+
+        {/* Footer Shortcut */}
+        <div className="border-t border-white/5 bg-white/[0.02] px-8 py-4 text-center">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-muted">
+            End of technical brief
+          </p>
         </div>
       </div>
     </div>
